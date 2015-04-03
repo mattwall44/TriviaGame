@@ -9,6 +9,7 @@ public class Player {
 
 	private int points;
 	private int pin;
+	private String name;
 	
 	/**
 	 * Constructor.
@@ -17,6 +18,10 @@ public class Player {
 	public Player(int password) {
 		points = 0;
 		pin = password;
+	}
+	
+	public Player() {
+		
 	}
 	
 	/**
@@ -49,5 +54,10 @@ public class Player {
 	 */
 	public boolean checkPin(int pin) {
 		return (this.pin == pin);
+	}
+	
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 }
