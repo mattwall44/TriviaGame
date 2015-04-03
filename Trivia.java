@@ -8,7 +8,8 @@ public class Trivia {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		ArrayList<String> questionStrings = new ArrayList<String>();
 		ArrayList<Player> players = new ArrayList<Player>();
-		ArrayList<Player> ties= new ArrayList <Player>();
+		
+		
 		
 		File questionFile = new File("Questions.dat");
 		Scanner questionScanner = null;
@@ -54,8 +55,9 @@ public class Trivia {
 		
 		int randomNum=-1;
 		boolean underSix=true;
-		while(underSix){
-			randomNum=random(lineCount);
+		
+		for(int counter=0; counter<6; counter++){
+			randomNum=random(questions.size());
 			for(int i=0; i<numPlayers; i++){
 				System.out.println(players.get(i).getName()+"'s Turn\n");
 				System.out.println(questions.get(randomNum).getQuestion());
@@ -71,22 +73,16 @@ public class Trivia {
 				else{
 					System.out.println("You are wrong");
 				}
+				
 			}	
+			questions.remove(randomNum);
 			for(int i=0; i<numPlayers; i++){
 				System.out.println(players.get(i).getName()+"'s Points: "+players.get(i).getPoints());
 			}
-			for(int i=0; i<numPlayers; i++){
-				if(players.get(i).getPoints()==6){
-					ties.add(players.get(i));
-					underSix=false;
-					
-				}
-			}
 			
-			if(ties.size()>1){
-				System.out.println("TIE");
-				//tie break class
-			}
+		}
+			
+			
 		}
 	}
 	public static int random(int num){
