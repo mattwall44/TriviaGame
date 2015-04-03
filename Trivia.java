@@ -1,6 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Trivia {
 
@@ -15,15 +14,18 @@ public class Trivia {
 		Scanner keyboard = new Scanner(System.in);
 		String input = "";
 		int numPlayers = 0;
+		int lineCount=0;
 		
 		try{
 			questionScanner = new Scanner(questionFile);
 		} catch(FileNotFoundException e) {
 			System.out.println("File not found");
 		}
+		
 		Question q = null;
 		while(questionScanner.hasNext()) {
-			q = new Question(questionScanner.nextLine());
+			questions.add(new Question(questionScanner.nextLine()));
+			lineCount++;
 		}
 		System.out.print("How many players will there be?: ");
 		input = keyboard.nextLine();
@@ -39,10 +41,22 @@ public class Trivia {
 				
 			}
 		}
-		System.out.println(q.getQuestion());
+		int randomNum= random(lineCount);
+		System.out.println(questions.get(randomNum).getQuestion());
 		for (int i = 0; i < 4; i++) {
-			System.out.println(q.getAnswers()[i]);
+			System.out.println(questions.get(randomNum).getAnswers()[i]);
 		}
-		System.out.println(q.getRightAnswer());
+		//System.out.println(q.getRightAnswer());
+		while(questionScanner.hasNextLine()){
+		}
+		//System.out.println(random(lineCount));
+		
 	}
+	public static int random(int num){
+	
+		Random generator= new Random ();
+		int randomNumber;
+		randomNumber= generator.nextInt(num);
+		return randomNumber;
+	}	
 }
