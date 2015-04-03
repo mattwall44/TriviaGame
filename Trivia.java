@@ -9,6 +9,8 @@ public class Trivia {
 		ArrayList<String> questionStrings = new ArrayList<String>();
 		ArrayList<Player> players = new ArrayList<Player>();
 		
+		
+		
 		File questionFile = new File("Questions.dat");
 		Scanner questionScanner = null;
 		Scanner keyboard = new Scanner(System.in);
@@ -22,7 +24,6 @@ public class Trivia {
 			System.out.println("File not found");
 		}
 		
-		Question q = null;
 		while(questionScanner.hasNext()) {
 			questions.add(new Question(questionScanner.nextLine()));
 			lineCount++;
@@ -41,16 +42,48 @@ public class Trivia {
 				
 			}
 		}
-		int randomNum= random(lineCount);
-		System.out.println(questions.get(randomNum).getQuestion());
-		for (int i = 0; i < 4; i++) {
-			System.out.println(questions.get(randomNum).getAnswers()[i]);
+		for(int i=0; i<numPlayers; i++){
+			players.add(new Player());
+			System.out.print("Enter Player Name: ");
+			players.get(i).setName(keyboard.nextLine());
+			System.out.print("Enter Player Pin: ");
+			players.get(i).setPin(keyboard.nextInt());
+			System.out.println("");
+			keyboard.nextLine();
+			
 		}
-		//System.out.println(q.getRightAnswer());
-		while(questionScanner.hasNextLine()){
-		}
-		//System.out.println(random(lineCount));
 		
+		int randomNum=-1;
+		boolean underSix=true;
+		
+		for(int counter=0; counter<6; counter++){
+			randomNum=random(questions.size());
+			for(int i=0; i<numPlayers; i++){
+				System.out.println(players.get(i).getName()+"'s Turn\n");
+				System.out.println(questions.get(randomNum).getQuestion());
+				for (int k = 0; k < 4; k++) {
+					System.out.println(questions.get(randomNum).getAnswers()[k]);
+				}
+				System.out.print("Answer: ");
+				String answerChoice= keyboard.nextLine();
+				if(answerChoice.equalsIgnoreCase(questions.get(randomNum).getRightAnswer())){
+					System.out.println("You are right");
+					players.get(i).addPoint();
+				}
+				else{
+					System.out.println("You are wrong");
+				}
+				
+			}	
+			questions.remove(randomNum);
+			for(int i=0; i<numPlayers; i++){
+				System.out.println(players.get(i).getName()+"'s Points: "+players.get(i).getPoints());
+			}
+			
+		}
+			
+			
+		}
 	}
 	public static int random(int num){
 	
