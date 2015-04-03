@@ -13,15 +13,11 @@ public class Player {
 	
 	/**
 	 * Constructor.
-	 * @param password Player's pin
 	 */
-	public Player(int password) {
-		points = 0;
-		pin = password;
-	}
-	
 	public Player() {
-		
+		pin = 0;
+		points = 0;
+		name = "";
 	}
 	
 	/**
@@ -54,6 +50,10 @@ public class Player {
 	 */
 	public boolean checkPin(int pin) {
 		return (this.pin == pin);
+	}
+	
+	public void setPin(int pin) {
+		this.pin = pin;
 	}
 	
 	
