@@ -49,7 +49,7 @@ public class Question {
 		int[] startIndices = new int[4];
 		int counter = 0;
 		for (int i = 0; i < trimmed.length()-1; i++) {
-			if (trimmed.charAt(i) == ':') {
+			if (trimmed.charAt(i) == '.') {
 				startIndices[counter] = i-1;
 				counter++;
 			}
