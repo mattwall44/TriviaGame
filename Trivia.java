@@ -10,16 +10,23 @@ public class Trivia {
 		ArrayList<String> questionStrings = new ArrayList<String>();
 		ArrayList<Player> players = new ArrayList<Player>();
 		
-		File questionFile = new File("Questions.dat");
+		File questionFile = null
 		Scanner questionScanner = null;
 		Scanner keyboard = new Scanner(System.in);
 		String input = "";
 		int numPlayers = 0;
 		
-		try{
-			questionScanner = new Scanner(questionFile);
-		} catch(FileNotFoundException e) {
-			System.out.println("File not found");
+		while(noFile){ //loops for correct file
+			System.out.print("Enter Question File: ");
+			fileName= keyboard.nextLine();
+			questionFile=new File(fileName);
+			try{
+				questionScanner = new Scanner(questionFile);
+				noFile=false;
+			} catch(FileNotFoundException e) {
+				System.out.println("File not found");
+				noFile= true;
+			}
 		}
 		Question q = null;
 		while(questionScanner.hasNext()) {
