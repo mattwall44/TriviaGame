@@ -17,7 +17,7 @@ public class Trivia {
 		String input = "";
 		int numPlayers = 0;
 		int lineCount=0;
-		
+		int pin=-1;
 		try{
 			questionScanner = new Scanner(questionFile);
 		} catch(FileNotFoundException e) {
@@ -30,16 +30,22 @@ public class Trivia {
 		}
 		System.out.print("How many players will there be?: ");
 		input = keyboard.nextLine();
-		while (numPlayers < 2) {
+		boolean notInteger=true;
+		while (numPlayers < 2 && notInteger) {
 			try {
 				numPlayers = Integer.parseInt(input);
+				notInteger=false;
 				if (numPlayers < 2) {
 					System.out.println("There must be at least two players.");
-					System.out.print("How many playerswill there be?: ");
+					System.out.print("How many players will there be?: ");
 					input = keyboard.nextLine();
+					notInteger=true;
 				}
+
 			} catch(NumberFormatException e) {
-				
+				notInteger=true;
+				System.out.print("Error: invalid input!\nHow many players will there be?: ");
+				input = keyboard.nextLine();
 			}
 		}
 		for(int i=0; i<numPlayers; i++){
@@ -47,9 +53,10 @@ public class Trivia {
 			System.out.print("Enter Player Name: ");
 			players.get(i).setName(keyboard.nextLine());
 			System.out.print("Enter Player Pin: ");
-			players.get(i).setPin(keyboard.nextInt());
+			pin= validatePin(keyboard.nextLine());
+			players.get(i).setPin(pin);
 			System.out.println("");
-			keyboard.nextLine();
+			
 			
 		}
 		
@@ -84,7 +91,7 @@ public class Trivia {
 			
 			
 		}
-	}
+	
 	public static int random(int num){
 	
 		Random generator= new Random ();
@@ -92,4 +99,38 @@ public class Trivia {
 		randomNumber= generator.nextInt(num);
 		return randomNumber;
 	}	
+	
+	public static int validatePin (String str)
+	{
+		Scanner keyboard= new Scanner(System.in);
+		int number=-1;
+		boolean isItInt=false;
+		boolean fourDigit=false;
+		while (isItInt==false&& fourDigit==false)
+		{
+			try
+			{	
+				number= Integer.parseInt(str);
+				isItInt=true;
+				if(str.length()==4)
+				{
+					fourDigit=true;
+				}
+				else
+				{
+					isItInt=false;
+					System.out.print("Pin must be four digits\n Please enter a new pin:");
+					str= keyboard.nextLine();
+				}
+			}
+			catch(NumberFormatException n)
+			{
+				isItInt=false;
+				System.out.print("Error: Enter a number:");
+				str= keyboard.nextLine();		
+			}
+		}
+		return number;
+	}
+	
 }
