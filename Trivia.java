@@ -8,7 +8,7 @@ public class Trivia {
 		ArrayList<Question> questions = new ArrayList<Question>();
 		ArrayList<String> questionStrings = new ArrayList<String>();
 		ArrayList<Player> players = new ArrayList<Player>();
-		
+		ArrayList<Player> winners= new ArrayList<Player>();
 		
 		
 		File questionFile = new File("Questions.dat");
@@ -62,11 +62,18 @@ public class Trivia {
 		
 		int randomNum=-1;
 		boolean underSix=true;
-		
+		String pinStr="";
 		for(int counter=0; counter<6; counter++){
 			randomNum=random(questions.size());
 			for(int i=0; i<numPlayers; i++){
-				System.out.println(players.get(i).getName()+"'s Turn\n");
+				System.out.println("\n"+players.get(i).getName()+"'s Turn\n");
+				System.out.print("Enter Pin: ");
+				pinStr= keyboard.nextLine();
+				while(validatePin(pinStr)!= players.get(i).getPin()){
+					System.out.println("\n Error!");
+					System.out.print(players.get(i).getName()+", please enter pin: ");
+					pinStr= keyboard.nextLine();
+				}
 				System.out.println(questions.get(randomNum).getQuestion());
 				for (int k = 0; k < 4; k++) {
 					System.out.println(questions.get(randomNum).getAnswers()[k]);
@@ -74,11 +81,11 @@ public class Trivia {
 				System.out.print("Answer: ");
 				String answerChoice= keyboard.nextLine();
 				if(answerChoice.equalsIgnoreCase(questions.get(randomNum).getRightAnswer())){
-					System.out.println("You are right");
+					//System.out.println("You are right");
 					players.get(i).addPoint();
 				}
 				else{
-					System.out.println("You are wrong");
+					//System.out.println("You are wrong");
 				}
 				
 			}	
@@ -88,9 +95,24 @@ public class Trivia {
 			}
 			
 		}
-			
-			
+		winners.add(players.get(0));
+		for(int i=0; i<players.size(); i++){
+			if(players.get(i).getPoints()>winners.get(0).getPoints()){
+				winners.clear();
+				winners.add(players.get(i));
+			}
+			else if(players.get(i).getPoints()==winners.get(0).getPoints()){
+				winners.add(players.get(1));
+			}
+			else{}
 		}
+		if(winners.size()>1){
+			System.out.println("Tie");
+		}
+		else{
+			System.out.println("The winner is "+ winners.get(0).getName());
+		}
+	}
 	
 	public static int random(int num){
 	
@@ -112,14 +134,14 @@ public class Trivia {
 			{	
 				number= Integer.parseInt(str);
 				isItInt=true;
-				if(str.length()==4)
+				if(str.length()==4 && number>=0)
 				{
 					fourDigit=true;
 				}
 				else
 				{
 					isItInt=false;
-					System.out.print("Pin must be four digits\n Please enter a new pin:");
+					System.out.print("Pin must be a positive four(4) digit number \n Please enter a new pin:");
 					str= keyboard.nextLine();
 				}
 			}
