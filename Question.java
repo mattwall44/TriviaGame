@@ -5,7 +5,7 @@
  */
 public class Question {
 
-	private char rightAnswer;
+	private String rightAnswer;
 	private String[] answers;
 	private String question;
 	
@@ -71,8 +71,8 @@ public class Question {
 	 * @param questionString
 	 * @return letter of right answer
 	 */
-	private char parseRightAnswer(String questionString) {
-		return questionString.charAt(questionString.length()-1);
+	private String parseRightAnswer(String questionString) {
+		return String.valueOf(questionString.charAt(questionString.length()-1));
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class Question {
 	 * Returns the letter of the right answer.
 	 * @return rightAnswer
 	 */
-	public char getRightAnswer() {
+	public String getRightAnswer() {
 		return rightAnswer;
 	}
 
