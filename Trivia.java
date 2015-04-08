@@ -7,26 +7,39 @@ public class Trivia {
 		
 		ArrayList<Question> questions = new ArrayList<Question>();
 		ArrayList<String> questionStrings = new ArrayList<String>();
+		ArrayList<TieQuestion> tieBreaks= new ArrayList<TieQuestion>();
 		ArrayList<Player> players = new ArrayList<Player>();
 		ArrayList<Player> winners= new ArrayList<Player>();
+		ArrayList<Integer> tieValue= new ArrayList<Integer>();
 		
 		
 		File questionFile = new File("Questions.dat");
 		Scanner questionScanner = null;
+		File tieFile= new File("TieBreak.dat");
+		Scanner tieScanner= null;
 		Scanner keyboard = new Scanner(System.in);
 		String input = "";
 		int numPlayers = 0;
 		int lineCount=0;
+		int tieLineCount=0;
 		int pin=-1;
 		try{
 			questionScanner = new Scanner(questionFile);
 		} catch(FileNotFoundException e) {
 			System.out.println("File not found");
 		}
-		
+		try{
+			tieScanner= new Scanner(tieFile);
+		} catch(FileNotFoundException fnf){
+			System.out.println("File not found");
+		}
 		while(questionScanner.hasNext()) {
 			questions.add(new Question(questionScanner.nextLine()));
 			lineCount++;
+		}
+		while(tieScanner.hasNext()){
+			tieBreaks.add(new TieQuestion(tieScanner.nextLine()));
+			tieLineCount++;
 		}
 		System.out.print("How many players will there be?: ");
 		input = keyboard.nextLine();
@@ -107,7 +120,24 @@ public class Trivia {
 			else{}
 		}
 		if(winners.size()>1){
-			System.out.println("Tie");
+			int tieRandom=-1;
+			int tieAnswer;
+			tieRandom= random(winners.size());
+			for(int i=0; i<winners.size()-1;i++){
+				System.out.println("\n"+winners.get(i).getName()+"'s Turn\n");
+				System.out.print("Enter Pin: ");
+				pinStr= keyboard.nextLine();
+				while(validatePin(pinStr)!= winners.get(i).getPin()){
+					System.out.println("\n Error!");
+					System.out.print(winners.get(i).getName()+", please enter pin: ");
+					pinStr= keyboard.nextLine();
+				}
+			System.out.println(tieBreaks.get(tieRandom).getQuestion());
+			System.out.print("Answer: ");
+			tieAnswer= validateInt(keyboard.nextLine());
+			tieValue.add(tieBreaks.get(tieRandom).getAnswers()-tieAnswer);
+			
+			
 		}
 		else{
 			System.out.println("The winner is "+ winners.get(0).getName());
@@ -154,5 +184,36 @@ public class Trivia {
 		}
 		return number;
 	}
-	
+	public static int validateInt (String str)
+	{
+		Scanner keyboard= new Scanner(System.in);
+		int number=-1;
+		boolean isItInt=false;
+		boolean greaterThan0=false;
+		while (isItInt==false&& greaterThan0==false)
+		{
+			try
+			{	
+				number= Integer.parseInt(str);
+				isItInt=true;
+				if(number>=0)
+				{
+					greaterThan0=true;
+				}
+				else
+				{
+					isItInt=false;
+					System.out.print("Number must be 0 or greater\n Please enter a new number:");
+					str= keyboard.nextLine();
+				}
+			}
+			catch(NumberFormatException n)
+			{
+				isItInt=false;
+				System.out.print("Error: Enter a number:");
+				str= keyboard.nextLine();		
+			}
+		}
+		return number;
+	}
 }
