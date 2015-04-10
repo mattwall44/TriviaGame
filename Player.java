@@ -56,19 +56,37 @@ public class Player {
 	public void setPin(int pin) {
 		this.pin = pin;
 	}
-	
+	/**
+	 * Set method for tieValue
+	 * Used in tie break situations 
+	 * to determine who is closer to the correct answer
+	 * @param val (user's answer)
+	 */ 
 	public void setTieValue(int val){
 		tieValue=Math.abs(val);
 	}
+	
+	/**
+	 * Get method for tie value
+	 * @returns tieValue
+	 */
 	public int getTieValue(){
 		return tieValue;
 	}
 	
+	/**
+	 * Set the player's name
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	public String getName(){
+	/**
+	 * Get method for the player's name
+	 * @return name
+	 */
+	public String getName() {
 		return name;
 	}
 }
