@@ -9,14 +9,16 @@ public class Player {
 
 	private int points;
 	private int pin;
-	
+	private String name;
+	private int tieValue;
 	/**
 	 * Constructor.
-	 * @param password Player's pin
 	 */
-	public Player(int password) {
+	public Player() {
+		pin = 0;
 		points = 0;
-		pin = password;
+		name = "";
+		tieValue=0;
 	}
 	
 	/**
@@ -49,5 +51,24 @@ public class Player {
 	 */
 	public boolean checkPin(int pin) {
 		return (this.pin == pin);
+	}
+	
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+	
+	public void setTieValue(int val){
+		tieValue=Math.abs(val);
+	}
+	public int getTieValue(){
+		return tieValue;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
 	}
 }
