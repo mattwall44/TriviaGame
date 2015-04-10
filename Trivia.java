@@ -93,6 +93,10 @@ public class Trivia {
 				}
 				System.out.print("Answer: ");
 				String answerChoice= keyboard.nextLine();
+				while(!(answerChoice.equalsIgnoreCase("a")||answerChoice.equalsIgnoreCase("b")||answerChoice.equalsIgnoreCase("c")||answerChoice.equalsIgnoreCase("d"))){
+					System.out.print("Answer must be A, B, C, or D\nAnswer: ");
+					answerChoice= keyboard.nextLine();
+				}
 				if(answerChoice.equalsIgnoreCase(questions.get(randomNum).getRightAnswer())){
 					//System.out.println("You are right");
 					players.get(i).addPoint();
